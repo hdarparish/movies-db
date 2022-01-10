@@ -5,9 +5,11 @@ header {
   align-items: center;
 }
 
+/* Logo section */
+
 .logo {
   padding: 1rem;
-  border: 3px solid #ffffff;
+  /*   border: 3px solid #ffffff; */
 
   display: flex;
   flex-direction: column;
@@ -29,6 +31,8 @@ header {
   }
 }
 
+/* Search input section */
+
 .header-input {
   input {
     background-color: inherit;
@@ -43,6 +47,9 @@ header {
     font-size: 1rem;
     letter-spacing: 1px;
     &::placeholder {
+      color: white;
+    }
+    &::-moz-placeholder {
       color: white;
     }
     &::selection {
