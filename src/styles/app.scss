@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #3b82f6 repeat;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  color: white;
+
+  font-family: "Roboto", sans-serif;
+  /*   font-family: "Alfa Slab One", cursive; */
+  /*  font-family: "Big Shoulders Inline Text", cursive;
+  
+  font-family: "Patua One", cursive; */
+}
+@import url("https://fonts.googleapis.com/css2?family=Hepta+Slab&family=Roboto&display=swap");
+
+@import "header.scss";
