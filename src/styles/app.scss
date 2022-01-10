@@ -5,7 +5,7 @@
 }
 
 body {
-  background: #3b82f6 repeat;
+  background: #3b82f6;
 }
 
 h1,
@@ -24,3 +24,4 @@ p {
 @import url("https://fonts.googleapis.com/css2?family=Hepta+Slab&family=Roboto&display=swap");
 
 @import "header.scss";
+@import "categories.scss";
