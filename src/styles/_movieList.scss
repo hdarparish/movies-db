@@ -1,0 +1,14 @@
+.movies {
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; */
+  margin: 1rem;
+  display: grid;
+  /*   grid-template-columns: repeat(4, 25rem); */
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 2rem;
+  justify-items: center;
+
+  align-items: center;
+}

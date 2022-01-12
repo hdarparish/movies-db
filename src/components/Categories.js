@@ -1,4 +1,4 @@
-import react, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 const categories = [
   "Top",
@@ -26,22 +26,24 @@ const categories = [
 
 function Categories() {
   const [categoryActive, setCategoryActive] = useState(null);
-  const categoryRef = useRef(null);
 
+  //toggle active class, remove from previous element and add to the clicked element
   const toggleClass = (e) => {
-    if (categoryActive) {
-      categoryActive.classList.toggle("active");
-      e.target.classList.toggle("active");
-    } else {
-      e.target.classList.toggle("active");
-    }
+    categoryActive.classList.toggle("active");
+    e.target.classList.toggle("active");
     setCategoryActive(e.target);
   };
+
+  //on initialization set active to top category
+  useEffect(() => {
+    document.querySelector("#category0").classList.toggle("active");
+    setCategoryActive(document.querySelector("#category0"));
+  }, []);
   return (
     <section>
       <div className="categories">
         {categories.map((genre, index) => (
-          <p key={index} onClick={toggleClass} ref={categoryRef}>
+          <p key={index} id={`category${index}`} onClick={toggleClass}>
             {genre}
           </p>
         ))}

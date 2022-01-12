@@ -12,7 +12,8 @@ h1,
 h2,
 h3,
 h4,
-p {
+p,
+button {
   color: white;
 
   font-family: "Roboto", sans-serif;
@@ -25,3 +26,5 @@ p {
 
 @import "header.scss";
 @import "categories.scss";
+@import "movieList.scss";
+@import "movieCard.scss";
