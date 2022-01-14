@@ -3,13 +3,14 @@
   justify-content: space-between;
   align-items: center;
   overflow-x: scroll;
-  margin: 0.5rem;
   white-space: nowrap;
 
   p {
     padding: 0.5rem;
     cursor: pointer;
     margin: 0.2rem 1rem;
+    /* add transparent border to avoid element width change when user selects */
+    border: 3px solid transparent;
   }
 
   scrollbar-width: thin;
@@ -23,6 +24,6 @@
 }
 
 .active {
-  border: 3px solid #ffff;
+  border: 3px solid #ffff !important;
   border-radius: 10px;
 }
