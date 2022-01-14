@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
+//animation
+import { motion } from "framer-motion";
 
 function MovieList() {
   const [movieList, setMovieList] = useState([]);
@@ -16,12 +18,28 @@ function MovieList() {
     };
     getData();
   }, []);
+
+  const container = {
+    hidden: { opacity: 1 },
+    show: {
+      opacity: 1,
+      transition: {
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <section>
-      <div className="movies">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="movies"
+      >
         {movieList.length > 0 &&
           movieList.map((movie) => <MovieCard key={movie._id} movie={movie} />)}
-      </div>
+      </motion.div>
     </section>
   );
 }

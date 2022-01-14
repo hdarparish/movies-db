@@ -5,7 +5,9 @@
 }
 
 body {
-  background: #3b82f6;
+  background: #818997;
+  /*   background: #3b82f6; */
+  object-fit: cover;
 }
 
 h1,
@@ -28,3 +30,4 @@ button {
 @import "categories.scss";
 @import "movieList.scss";
 @import "movieCard.scss";
+@import "movieDetail.scss";
