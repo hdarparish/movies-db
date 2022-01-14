@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 //animation
 import { motion } from "framer-motion";
+import { movieListAnimation } from "../Animation";
 
 function MovieList() {
   const [movieList, setMovieList] = useState([]);
@@ -19,20 +20,10 @@ function MovieList() {
     getData();
   }, []);
 
-  const container = {
-    hidden: { opacity: 1 },
-    show: {
-      opacity: 1,
-      transition: {
-        ease: "easeOut",
-      },
-    },
-  };
-
   return (
     <section>
       <motion.div
-        variants={container}
+        variants={movieListAnimation}
         initial="hidden"
         animate="show"
         className="movies"

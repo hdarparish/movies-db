@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 //animation
 import { motion } from "framer-motion";
+import { categoryAnimation } from "../Animation";
 
 const categories = [
   "Top",
@@ -36,16 +37,6 @@ function Categories() {
     setCategoryActive(e.target);
   };
 
-  const list = {
-    visible: {
-      opacity: 1,
-      transition: {
-        delay: 0.5,
-        duration: 0.5,
-      },
-    },
-    hidden: { opacity: 0 },
-  };
   //on initialization set active to top category
   useEffect(() => {
     document.querySelector("#category0").classList.toggle("active");
@@ -56,8 +47,8 @@ function Categories() {
       <motion.div
         className="categories"
         initial="hidden"
-        animate="visible"
-        variants={list}
+        animate="show"
+        variants={categoryAnimation}
       >
         {categories.map((genre, index) => (
           <motion.p key={index} id={`category${index}`} onClick={toggleClass}>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 //router
 import { useLocation, useNavigate } from "react-router-dom";
 //animation
 import { motion } from "framer-motion";
-import axios from "axios";
+import { pageAnimation, detailAnimation } from "../Animation";
 
 function MovieDetail() {
   const history = useLocation();
@@ -25,51 +26,6 @@ function MovieDetail() {
     };
     getData();
   }, []);
-
-  const pageAnimation = {
-    hidden: {
-      opacity: 0,
-      y: -300,
-    },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        when: "beforeChildren",
-        staggerChildren: 0.25,
-      },
-    },
-    exit: {
-      opacity: 0,
-      /*       y: -300, */
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
-  const detailAnimation = {
-    hidden: {
-      opacity: 0,
-      y: 100,
-    },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        when: "beforeChildren",
-        staggerChildren: 0.25,
-      },
-    },
-    exit: {
-      opacity: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
 
   return (
     <motion.section

@@ -1,14 +1,16 @@
 import React from "react";
 //animation
 import { motion } from "framer-motion";
+import { headerAnimation } from "../Animation";
 
 function Header() {
   return (
     <header>
       <motion.div
         className="logo"
-        initial={{ y: -250 }}
-        animate={{ y: 0 }}
+        initial="hidden"
+        animate="show"
+        variants={headerAnimation}
         whileHover={{ scale: 1.1 }}
       >
         <motion.h1>MOVIES</motion.h1>
@@ -16,8 +18,9 @@ function Header() {
       </motion.div>
       <motion.div
         className="header-input"
-        initial={{ y: -250 }}
-        animate={{ y: 0 }}
+        initial="hidden"
+        animate="show"
+        variants={headerAnimation}
       >
         <input type="text" placeholder="Search Database" />
       </motion.div>

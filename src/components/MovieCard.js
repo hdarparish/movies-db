@@ -1,21 +1,16 @@
-//animation
-import { motion } from "framer-motion";
 //router
 import { Link } from "react-router-dom";
+//animation
+import { motion } from "framer-motion";
+import { movieItemAnimation } from "../Animation";
+//lazy load
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function MovieCard({ movie }) {
-  const item = {
-    hidden: { opacity: 0, y: 100 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { delay: 0.75, ease: "easeOut", duration: 1 },
-    },
-  };
   return (
-    <motion.div className="card" variants={item}>
+    <motion.div className="card" variants={movieItemAnimation}>
       <div>
-        <img src={movie.poster} alt="" />
+        <LazyLoadImage src={movie.poster} alt="poster" />
       </div>
       <div className="overlay">
         <div className="details">
