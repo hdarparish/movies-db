@@ -2,27 +2,14 @@ import React from "react";
 import MovieCard from "./MovieCard";
 //redux
 import { useSelector } from "react-redux";
-
 //animation
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { movieListAnimation } from "../Animation";
+//add UUID to generate unique keys otherwise react will not re-render components that might exist in multiple categories
+import { v4 as uuidv4 } from "uuid";
 
 function MovieList() {
-  //const [movieList, setMovieList] = useState([]);
-
   const movieList = useSelector((state) => state.movies.movieList);
-
-  /*   useEffect(() => {
-    const getData = async () => {
-      try {
-        let { data } = await axios.get("http://localhost:4000/");
-        setMovieList(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    getData();
-  }, []); */
 
   return (
     <section>
@@ -30,10 +17,15 @@ function MovieList() {
         variants={movieListAnimation}
         initial="hidden"
         animate="show"
+        exit="exit"
         className="movies"
       >
-        {movieList &&
-          movieList.map((movie) => <MovieCard key={movie._id} movie={movie} />)}
+        <AnimatePresence>
+          {movieList &&
+            movieList.map((movie) => (
+              <MovieCard key={uuidv4()} movie={movie} />
+            ))}
+        </AnimatePresence>
       </motion.div>
     </section>
   );

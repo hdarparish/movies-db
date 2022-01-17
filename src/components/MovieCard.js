@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { loadDetail } from "../actions/detailAction";
 import { useDispatch } from "react-redux";
 //animation
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { movieItemAnimation } from "../Animation";
 //lazy load
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -15,7 +15,13 @@ function MovieCard({ movie }) {
     dispatch(loadDetail(movie._id));
   };
   return (
-    <motion.div className="card" variants={movieItemAnimation}>
+    <motion.div
+      className="card"
+      initial="hidden"
+      animate="show"
+      variants={movieItemAnimation}
+      exit="exit"
+    >
       <div>
         <LazyLoadImage src={movie.poster} alt="poster" />
       </div>
@@ -27,6 +33,7 @@ function MovieCard({ movie }) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="details__button"
             onClick={loadDetailHandler}
           >

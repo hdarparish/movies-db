@@ -5,8 +5,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 //Redux
 import { useSelector } from "react-redux";
 //animation
-import { motion } from "framer-motion";
-import { pageAnimation, detailAnimation } from "../Animation";
+import { motion, AnimatePresence } from "framer-motion";
+import { detailPageAnimation, detailAnimation } from "../Animation";
 //icon
 import starIcon from "../img/star.svg";
 
@@ -16,19 +16,19 @@ function MovieDetail() {
   const url = history.pathname.replaceAll("/", "");
 
   //const [movie, setMovie] = useState(null);
-  const movie = useSelector((state) => state.details.movieDetail);
+  const { movieDetail, isLoading } = useSelector((state) => state.detail);
 
   return (
     <>
-      {movie && (
+      {!isLoading && (
         <motion.section
           style={{
-            backgroundImage: ` linear-gradient(90deg, rgba(0, 0, 0, 0.765) 48.37%, rgba(0, 0, 0, 0) 94.1%, rgba(0, 0, 0, 0) 100.92%), url(${movie.poster}.JPG)`,
+            backgroundImage: ` linear-gradient(90deg, rgba(0, 0, 0, 0.765) 48.37%, rgba(0, 0, 0, 0) 94.1%, rgba(0, 0, 0, 0) 100.92%), url(${movieDetail.poster}.JPG)`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
           }}
           exit="exit"
-          variants={pageAnimation}
+          variants={detailPageAnimation}
           initial="hidden"
           animate="show"
           className="detail-wrapper__background-image"
@@ -47,17 +47,17 @@ function MovieDetail() {
               </motion.button>
             </div>
             <motion.div variants={detailAnimation}>
-              <h1 className="detail__title">{movie.title}</h1>
+              <h1 className="detail__title">{movieDetail.title}</h1>
               <div className="detail__year-runtime">
-                <p className="detail__year">{movie.released}</p>
-                <p className="detail__runtime">{movie.runtime}</p>
+                <p className="detail__year">{movieDetail.released}</p>
+                <p className="detail__runtime">{movieDetail.runtime}</p>
               </div>
 
               <div className="detail__ratings">
-                <p>{movie.rating.$numberDecimal.toString()} / 10</p>
+                <p>{movieDetail.rating.$numberDecimal.toString()} / 10</p>
                 <img src={starIcon} alt="Star Icon" />
                 <p>
-                  {movie.votes.toLocaleString("en", {
+                  {movieDetail.votes.toLocaleString("en", {
                     maximumFractionDigits: 0,
                   })}{" "}
                   votes
@@ -65,16 +65,16 @@ function MovieDetail() {
               </div>
             </motion.div>
             <motion.div variants={detailAnimation}>
-              <p className="detail__description">{movie.description}</p>
+              <p className="detail__description">{movieDetail.description}</p>
             </motion.div>
             <motion.div variants={detailAnimation}>
               <p className="detail__director">
                 <span>Director: </span>
-                {movie.directors.join(", ")}
+                {movieDetail.directors.join(", ")}
               </p>
               <p className="detail__stars">
                 <span>Stars: </span>
-                {movie.actors.join(", ")}
+                {movieDetail.actors.join(", ")}
               </p>
             </motion.div>
           </motion.div>

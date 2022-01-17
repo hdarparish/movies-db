@@ -66,6 +66,7 @@ function Categories() {
         className="categories"
         initial="hidden"
         animate="show"
+        exit="exit"
         variants={categoryAnimation}
       >
         {categories.map((genre, index) => (

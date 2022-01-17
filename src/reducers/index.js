@@ -4,7 +4,7 @@ import detailReducer from "./detailReducer";
 
 const allReducers = combineReducers({
   movies: movieReducer,
-  details: detailReducer,
+  detail: detailReducer,
 });
 
 export default allReducers;

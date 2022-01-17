@@ -10,6 +10,7 @@ function Header() {
         className="logo"
         initial="hidden"
         animate="show"
+        exit="exit"
         variants={headerAnimation}
         whileHover={{ scale: 1.1 }}
       >
@@ -20,6 +21,7 @@ function Header() {
         className="header-input"
         initial="hidden"
         animate="show"
+        exit="exit"
         variants={headerAnimation}
       >
         <input type="text" placeholder="Search Database" />

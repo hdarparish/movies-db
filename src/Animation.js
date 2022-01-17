@@ -6,7 +6,14 @@ export const headerAnimation = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { delay: 0.2 },
+    transition: { duration: 0.5 },
+  },
+  exit: {
+    opacity: 0,
+    y: -250,
+    transition: {
+      duration: 0.5,
+    },
   },
 };
 
@@ -42,15 +49,24 @@ export const categoryAnimation = {
       duration: 0.5,
     },
   },
+  exit: {
+    opacity: 0,
+  },
 };
 
 export const movieListAnimation = {
-  hidden: { opacity: 1 },
+  hidden: { opacity: 0 },
   show: {
     opacity: 1,
     transition: {
+      delay: 0.75,
       ease: "easeOut",
     },
+  },
+  exit: {
+    opacity: 0,
+    y: 200,
+    transition: { ease: "easeOut", duration: 0.5 },
   },
 };
 
@@ -61,16 +77,19 @@ export const movieItemAnimation = {
     y: 0,
     transition: { delay: 0.75, ease: "easeOut", duration: 1 },
   },
+  exit: {
+    opacity: 0,
+    y: 200,
+    transition: { ease: "easeOut", duration: 0.5 },
+  },
 };
 
-export const detailAnimation = {
+export const detailPageAnimation = {
   hidden: {
     opacity: 0,
-    y: 100,
   },
   show: {
     opacity: 1,
-    y: 0,
     transition: {
       duration: 0.5,
       when: "beforeChildren",
@@ -82,5 +101,25 @@ export const detailAnimation = {
     transition: {
       duration: 0.5,
     },
+  },
+};
+
+export const detailAnimation = {
+  hidden: {
+    opacity: 0,
+    y: 50,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.75,
+      when: "beforeChildren",
+      staggerChildren: 0.25,
+    },
+  },
+  exit: {
+    y: 100,
+    transition: { ease: "easeOut", duration: 0.5 },
   },
 };
