@@ -1,14 +1,18 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import MovieCard from "./MovieCard";
+//redux
+import { useSelector } from "react-redux";
+
 //animation
 import { motion } from "framer-motion";
 import { movieListAnimation } from "../Animation";
 
 function MovieList() {
-  const [movieList, setMovieList] = useState([]);
+  //const [movieList, setMovieList] = useState([]);
 
-  useEffect(() => {
+  const movieList = useSelector((state) => state.movies.movieList);
+
+  /*   useEffect(() => {
     const getData = async () => {
       try {
         let { data } = await axios.get("http://localhost:4000/");
@@ -18,7 +22,7 @@ function MovieList() {
       }
     };
     getData();
-  }, []);
+  }, []); */
 
   return (
     <section>
@@ -28,7 +32,7 @@ function MovieList() {
         animate="show"
         className="movies"
       >
-        {movieList.length > 0 &&
+        {movieList &&
           movieList.map((movie) => <MovieCard key={movie._id} movie={movie} />)}
       </motion.div>
     </section>
