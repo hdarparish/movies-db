@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { loadDetail } from "../actions/detailAction";
 import { useDispatch } from "react-redux";
 //animation
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { movieItemAnimation } from "../Animation";
 //lazy load
 import { LazyLoadImage } from "react-lazy-load-image-component";

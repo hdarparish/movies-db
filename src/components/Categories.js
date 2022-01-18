@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { categoryAnimation } from "../Animation";
 //redux
 import { useDispatch } from "react-redux";
-import { loadTopMovies, loadGenre } from "../actions/moviesAction";
+import { loadMovies } from "../actions/moviesAction";
 
 const categories = [
   "Top",
@@ -32,33 +32,26 @@ const categories = [
 ];
 
 function Categories() {
-  const [categoryActive, setCategoryActive] = useState(null);
+  const [categoryActive, setCategoryActive] = useState("Top");
 
   const dispatch = useDispatch();
-  const fetchMovieList = (category = null) => {
-    if (category === null || category === "Top") {
-      dispatch(loadTopMovies());
-    } else {
-      dispatch(loadGenre(category));
-    }
+  const fetchMovieList = (category) => {
+    dispatch(loadMovies(category));
   };
 
   //toggle active class, remove from previous element and add to the clicked element
   const toggleClass = (e) => {
-    categoryActive.classList.toggle("active");
+    const active = document.querySelector(`#${categoryActive}`);
+    active.classList.toggle("active");
     e.target.classList.toggle("active");
-    setCategoryActive(e.target);
+    setCategoryActive(e.target.id);
     fetchMovieList(e.target.id);
   };
 
+  //on initialization set active to top category and get the movie list
   useEffect(() => {
-    fetchMovieList();
-  }, []);
-
-  //on initialization set active to top category
-  useEffect(() => {
-    document.querySelector("#Top").classList.toggle("active");
-    setCategoryActive(document.querySelector("#Top"));
+    document.querySelector(`#${categoryActive}`).classList.toggle("active");
+    fetchMovieList(categoryActive);
   }, []);
   return (
     <section>
@@ -70,11 +63,7 @@ function Categories() {
         variants={categoryAnimation}
       >
         {categories.map((genre, index) => (
-          <motion.p
-            key={index}
-            id={genre}
-            /* id={`category${index}`} */ onClick={toggleClass}
-          >
+          <motion.p key={index} id={genre} onClick={toggleClass}>
             {genre}
           </motion.p>
         ))}

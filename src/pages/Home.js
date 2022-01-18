@@ -1,4 +1,4 @@
-import { animate, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Categories from "../components/Categories";
 import Header from "../components/Header";
 import MovieList from "../components/MovieList";
@@ -12,7 +12,6 @@ function Home() {
     >
       <Header />
       <Categories />
-
       <MovieList />
     </motion.div>
   );

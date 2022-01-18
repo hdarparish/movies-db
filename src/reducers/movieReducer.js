@@ -1,5 +1,6 @@
 const initialState = {
   movieList: [],
+  category: "",
 };
 
 const movieReducer = (state = initialState, action) => {
@@ -8,6 +9,10 @@ const movieReducer = (state = initialState, action) => {
       return {
         ...state,
         movieList: action.payload,
+      };
+    case "SET_CATEGORY_NAME":
+      return {
+        category: action.payload,
       };
     default:
       return { ...state };

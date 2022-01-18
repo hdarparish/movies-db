@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 //router
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //Redux
 import { useSelector } from "react-redux";
 //animation
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { detailPageAnimation, detailAnimation } from "../Animation";
 //icon
 import starIcon from "../img/star.svg";
 
 function MovieDetail() {
-  const history = useLocation();
   const navigate = useNavigate();
-  const url = history.pathname.replaceAll("/", "");
 
   //const [movie, setMovie] = useState(null);
   const { movieDetail, isLoading } = useSelector((state) => state.detail);
