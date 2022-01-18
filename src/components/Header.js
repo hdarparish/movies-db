@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 //animation
 import { motion } from "framer-motion";
 import { headerAnimation } from "../Animation";
@@ -10,6 +10,7 @@ import axios from "axios";
 
 function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -25,6 +26,7 @@ function Header() {
     cancelToken = axios.CancelToken.source();
     if (searchQuery) {
       dispatch(loadQuery(searchQuery, cancelToken.token));
+      navigate("/search");
     }
 
     return () => {
@@ -41,7 +43,10 @@ function Header() {
         exit="exit"
         variants={headerAnimation}
         whileHover={{ scale: 1.1 }}
-        onClick={() => navigate("/")}
+        onClick={() => {
+          navigate("/");
+          setSearchQuery("");
+        }}
       >
         <motion.h1>MOVIES</motion.h1>
         <motion.h3>DATABASE</motion.h3>

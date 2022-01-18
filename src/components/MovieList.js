@@ -29,22 +29,31 @@ function MovieList() {
 
   useEffect(() => {
     setMovies([]);
-    loadMoviesHandler();
+    if (!location.pathname.includes("/search")) {
+      loadMoviesHandler();
+    }
   }, [category, location]);
 
   useEffect(() => {
+    /*     console.log(movieList); */
     if (movieList) {
       const newList = movieList.map((item) => ({
         ...item,
         uniqueID: uuidv4(),
       }));
-      setMovies((movies) => [...movies, ...newList]);
+      if (movies.length > 0) {
+        setMovies((movies) => [...movies, ...newList]);
+      } else {
+        setMovies(newList);
+      }
     }
   }, [movieList]);
 
   const loadNext = () => {
-    setCount(count + 20);
-    loadMoviesHandler(count + 20);
+    if (!location.pathname.includes("/search")) {
+      setCount(count + 20);
+      loadMoviesHandler(count + 20);
+    }
   };
 
   return (

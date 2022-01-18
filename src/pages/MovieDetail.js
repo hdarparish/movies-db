@@ -11,6 +11,7 @@ import starIcon from "../img/star.svg";
 
 function MovieDetail() {
   const navigate = useNavigate();
+  const history = window.location;
 
   //const [movie, setMovie] = useState(null);
   const { movieDetail, isLoading } = useSelector((state) => state.detail);

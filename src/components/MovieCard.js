@@ -37,7 +37,7 @@ function MovieCard({ movie }) {
             className="details__button"
             onClick={loadDetailHandler}
           >
-            <Link to={`/${movie._id}`}>
+            <Link to={`/movie/${movie._id}`}>
               <motion.button
                 whileHover={{
                   scale: 1.1,
