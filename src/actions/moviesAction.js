@@ -32,16 +32,13 @@ export const loadMovies = (category) => async (dispatch) => {
 };
 
 export const loadQuery = (query, cancelToken) => async (dispatch) => {
-  console.log(query);
   try {
     const movieList = await axios({
       method: "GET",
       url: `${process.env.REACT_APP_API_URL}search`,
       params: { query: query },
-      cancelToken,
+      cancelToken: cancelToken.token,
     });
-    console.log(movieList);
-
     dispatch({
       type: "FETCH_MOVIE_LIST",
       payload: movieList.data,
