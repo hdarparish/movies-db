@@ -1,20 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 //router
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 //Redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { loadDetail } from "../actions/detailAction";
 //animation
 import { motion } from "framer-motion";
-import { detailPageAnimation, detailAnimation } from "../Animation";
+import {
+  detailPageAnimation,
+  detailAnimation,
+  detailBtnAnimation,
+} from "../Animation";
 //icon
 import starIcon from "../img/star.svg";
 
 function MovieDetail() {
   const navigate = useNavigate();
+  const location = useLocation().pathname;
   const history = window.location;
+
+  const dispatch = useDispatch();
 
   //const [movie, setMovie] = useState(null);
   const { movieDetail, isLoading } = useSelector((state) => state.detail);
+
+  useEffect(() => {
+    if (Object.keys(movieDetail).length === 0) {
+      const movieURL = location.split("/");
+      const movieID = movieURL[movieURL.length - 1];
+      dispatch(loadDetail(movieID));
+    }
+  }, []);
 
   return (
     <>
@@ -34,12 +50,12 @@ function MovieDetail() {
           <motion.div className="detail">
             <div className="return__btn">
               <motion.button
-                whileHover={{
-                  scale: 1.1,
-                  backgroundColor: "#00000000",
-                  color: "#FFFF",
-                }}
-                onClick={() => navigate("/")}
+                initial="hidden"
+                animate="show"
+                whileHover="hover"
+                exit="exit"
+                variants={detailBtnAnimation}
+                onClick={() => navigate(-1)}
               >
                 Return
               </motion.button>

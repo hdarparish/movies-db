@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+//router
+import { useLocation, useNavigate } from "react-router-dom";
 //animation
 import { motion } from "framer-motion";
-import { categoryAnimation } from "../Animation";
+import { categoryAnimation, categoryItemAnimation } from "../Animation";
 //redux
-import { useDispatch } from "react-redux";
-import { loadMovies } from "../actions/moviesAction";
+import { useDispatch, useSelector } from "react-redux";
+import { loadCategory } from "../actions/categoryAction";
 
 const categories = [
   "Top",
@@ -33,14 +35,21 @@ const categories = [
 
 function Categories() {
   const [categoryActive, setCategoryActive] = useState("Top");
+  const category = useSelector((state) => state.category);
 
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const fetchMovieList = (category) => {
-    dispatch(loadMovies(category));
+    dispatch(loadCategory(category, 0));
   };
 
   //toggle active class, remove from previous element and add to the clicked element
   const toggleClass = (e) => {
+    /*     if (location.pathname !== "/") {
+      navigate("/");
+      dispatch({ type: "CLEAR_SEARCHED" });
+    } */
     const active = document.querySelector(`#${categoryActive}`);
     active.classList.toggle("active");
     e.target.classList.toggle("active");
@@ -55,7 +64,7 @@ function Categories() {
   }, []);
   return (
     <section>
-      <motion.div
+      <motion.ul
         className="categories"
         initial="hidden"
         animate="show"
@@ -63,11 +72,16 @@ function Categories() {
         variants={categoryAnimation}
       >
         {categories.map((genre, index) => (
-          <motion.p key={index} id={genre} onClick={toggleClass}>
+          <motion.li
+            key={index}
+            id={genre}
+            variants={categoryItemAnimation}
+            onClick={toggleClass}
+          >
             {genre}
-          </motion.p>
+          </motion.li>
         ))}
-      </motion.div>
+      </motion.ul>
     </section>
   );
 }
