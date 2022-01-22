@@ -41,16 +41,30 @@ export const pageAnimation = {
 };
 
 export const categoryAnimation = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 1, scale: 0 },
   show: {
     opacity: 1,
+    scale: 1,
     transition: {
-      delay: 0.5,
-      duration: 0.5,
+      delayChildren: 0.2,
+      staggerChildren: 0.1,
     },
   },
   exit: {
     opacity: 0,
+  },
+};
+
+export const categoryItemAnimation = {
+  hidden: { y: 20, opacity: 0 },
+  show: {
+    y: 0,
+    opacity: 1,
+  },
+  exit: {
+    opacity: 0,
+    y: 200,
+    transition: { ease: "easeOut", duration: 0.5 },
   },
 };
 
@@ -121,5 +135,27 @@ export const detailAnimation = {
   exit: {
     y: 100,
     transition: { ease: "easeOut", duration: 0.5 },
+  },
+};
+
+export const detailBtnAnimation = {
+  hidden: { opacity: 0, y: 50 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.2,
+      duration: 0.75,
+    },
+  },
+  exit: {
+    y: 50,
+    opacity: 0,
+    transition: { ease: "easeOut", duration: 0.5 },
+  },
+  hover: {
+    scale: 1.1,
+    backgroundColor: "#00000000",
+    color: "#FFFF",
   },
 };

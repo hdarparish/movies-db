@@ -4,7 +4,8 @@ import MovieCard from "./MovieCard";
 import { useLocation } from "react-router-dom";
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { loadGenre } from "../actions/moviesAction";
+import { loadMovies, loadQuery } from "../actions/moviesAction";
+import { loadCategory } from "../actions/categoryAction";
 //animation
 import { motion, AnimatePresence } from "framer-motion";
 import { movieListAnimation } from "../Animation";
@@ -16,23 +17,40 @@ import InfiniteScroll from "react-infinite-scroll-component";
 function MovieList() {
   const location = useLocation();
 
-  const category = useSelector((state) => state.movies.category);
-  const movieList = useSelector((state) => state.movies.movieList);
+  const { category, movieCount } = useSelector((state) => state.category);
+
+  const { movieList, searched } = useSelector((state) => state.movies);
   const [movies, setMovies] = useState([]);
-  const [count, setCount] = useState(0);
+  const [searchedMovies, setSearchedMovies] = useState([]);
+  const [count, setCount] = useState(movieCount);
 
   const dispatch = useDispatch();
 
   const loadMoviesHandler = (count = 0) => {
-    dispatch(loadGenre(category, count));
+    dispatch(loadMovies(category, count));
   };
 
   useEffect(() => {
+    if (searched) {
+      /*       console.log(searched);
+      setMovies([]);
+      setCount(0);
+      const newList = movieList.map((item) => ({
+        ...item,
+        uniqueID: uuidv4(),
+      })); */
+      setSearchedMovies((searchedMovies) => [...searchedMovies, ...searched]);
+    }
+  }, [searched]);
+
+  useEffect(() => {
+    console.log(searched);
     setMovies([]);
+    setCount(0);
     if (!location.pathname.includes("/search")) {
       loadMoviesHandler();
     }
-  }, [category, location]);
+  }, [category]);
 
   useEffect(() => {
     /*     console.log(movieList); */
@@ -41,28 +59,29 @@ function MovieList() {
         ...item,
         uniqueID: uuidv4(),
       }));
-      if (movies.length > 0) {
-        setMovies((movies) => [...movies, ...newList]);
-      } else {
-        setMovies(newList);
-      }
+
+      setMovies((movies) => [...movies, ...newList]);
     }
   }, [movieList]);
 
   const loadNext = () => {
-    if (!location.pathname.includes("/search")) {
-      setCount(count + 20);
+    console.log(count);
+    setCount(count + 20);
+    if (location.pathname === "/") {
       loadMoviesHandler(count + 20);
+    } else if (location.pathname.includes("/search")) {
+      const searchQuery = new URLSearchParams(location.search).get("q");
+      dispatch(loadQuery(searchQuery, count + 20));
     }
   };
 
   return (
     <section>
       <InfiniteScroll
-        dataLength={movies?.length}
+        dataLength={searched.length > 0 ? searchedMovies.length : movies.length}
         next={loadNext}
         hasMore={true}
-        loader={<h4>Loading...</h4>}
+        loader={<h4 className="movies-loading">Loading...</h4>}
         style={{ overflow: "hidden" }}
       >
         <motion.div
@@ -73,10 +92,13 @@ function MovieList() {
           className="movies"
         >
           <AnimatePresence>
-            {movies.length > 0 &&
-              movies.map((movie, index) => (
-                <MovieCard movie={movie} key={movie.uniqueID} />
-              ))}
+            {searchedMovies.length
+              ? searchedMovies.map((movie, index) => (
+                  <MovieCard movie={movie} key={movie._id} />
+                ))
+              : movies.map((movie, index) => (
+                  <MovieCard movie={movie} key={movie.uniqueID} />
+                ))}
           </AnimatePresence>
         </motion.div>
       </InfiniteScroll>

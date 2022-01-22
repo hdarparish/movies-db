@@ -1,28 +1,36 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 //animation
 import { motion } from "framer-motion";
 import { headerAnimation } from "../Animation";
 
 import { loadQuery } from "../actions/moviesAction";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 
 function Header() {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [searchQuery, setSearchQuery] = useState("");
 
   const dispatch = useDispatch();
 
-  let cancelToken;
-
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
+    e.preventDefault();
+    if (searchQuery) {
+      navigate(`/search?q=${searchQuery}`);
+      dispatch(loadQuery(searchQuery));
+    } else {
+      clearSearched();
+    }
   };
 
-  useEffect(() => {
+  const clearSearched = () => {
+    navigate("/");
+    window.location.reload();
+    setSearchQuery("");
+  };
+
+  /*   useEffect(() => {
     cancelToken = axios.CancelToken.source();
     if (searchQuery) {
       dispatch(loadQuery(searchQuery, cancelToken.token));
@@ -32,7 +40,7 @@ function Header() {
     return () => {
       cancelToken.cancel(`Cancel fetchStream `);
     };
-  }, [searchQuery]);
+  }, [searchQuery]); */
 
   return (
     <header>
@@ -43,10 +51,11 @@ function Header() {
         exit="exit"
         variants={headerAnimation}
         whileHover={{ scale: 1.1 }}
-        onClick={() => {
+        onClick={clearSearched} /* {
           navigate("/");
+          window.location.reload();
           setSearchQuery("");
-        }}
+        }} */
       >
         <motion.h1>MOVIES</motion.h1>
         <motion.h3>DATABASE</motion.h3>
@@ -58,12 +67,14 @@ function Header() {
         exit="exit"
         variants={headerAnimation}
       >
-        <input
-          type="text"
-          placeholder="Search Database"
-          value={searchQuery}
-          onChange={handleSearch}
-        />
+        <form action="" onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="Search Database"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </form>
       </motion.div>
     </header>
   );

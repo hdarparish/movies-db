@@ -1,18 +1,24 @@
 const initialState = {
   movieList: [],
-  category: "",
+  searched: [],
 };
 
 const movieReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "FETCH_MOVIE_LIST":
+    case "FETCH_MOVIES":
       return {
         ...state,
         movieList: action.payload,
       };
-    case "SET_CATEGORY_NAME":
+    case "FETCH_SEARCHED":
       return {
-        category: action.payload,
+        ...state,
+        searched: action.payload,
+      };
+    case "CLEAR_SEARCHED":
+      return {
+        ...state,
+        searched: [],
       };
     default:
       return { ...state };
