@@ -1,7 +1,8 @@
+import Header from "../components/Header";
 import Categories from "../components/Categories";
 import MovieList from "../components/MovieList";
 //router
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 //animation
 import { motion } from "framer-motion";
 
@@ -13,6 +14,7 @@ function Home() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      <Header />
       {location.pathname === "/" && <Categories />}
 
       <MovieList />

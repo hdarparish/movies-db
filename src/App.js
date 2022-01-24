@@ -1,4 +1,3 @@
-import Header from "./components/Header";
 import Home from "./pages/Home";
 import MovieDetail from "./pages/MovieDetail";
 import "./styles/app.scss";
@@ -12,7 +11,6 @@ function App() {
   return (
     <div className="app">
       <AnimatePresence exitBeforeEnter>
-        {!location.pathname.includes("/movie") && <Header />}
         <Routes location={location} key={location.key}>
           <Route path="/*" element={<Home />} />
           <Route path="/movie/:id" element={<MovieDetail />} />

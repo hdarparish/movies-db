@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-//router
-import { useLocation, useNavigate } from "react-router-dom";
 //animation
 import { motion } from "framer-motion";
 import { categoryAnimation, categoryItemAnimation } from "../Animation";
@@ -35,10 +33,8 @@ const categories = [
 
 function Categories() {
   const [categoryActive, setCategoryActive] = useState("Top");
-  const category = useSelector((state) => state.category);
+  const { category } = useSelector((state) => state.category);
 
-  const location = useLocation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const fetchMovieList = (category) => {
     dispatch(loadCategory(category, 0));
@@ -46,10 +42,6 @@ function Categories() {
 
   //toggle active class, remove from previous element and add to the clicked element
   const toggleClass = (e) => {
-    /*     if (location.pathname !== "/") {
-      navigate("/");
-      dispatch({ type: "CLEAR_SEARCHED" });
-    } */
     const active = document.querySelector(`#${categoryActive}`);
     active.classList.toggle("active");
     e.target.classList.toggle("active");
@@ -59,8 +51,14 @@ function Categories() {
 
   //on initialization set active to top category and get the movie list
   useEffect(() => {
-    document.querySelector(`#${categoryActive}`).classList.toggle("active");
-    fetchMovieList(categoryActive);
+    if (category) {
+      setCategoryActive(category);
+      document.querySelector(`#${category}`).classList.toggle("active");
+      // fetchMovieList(category);
+    } else {
+      document.querySelector(`#${categoryActive}`).classList.toggle("active");
+      fetchMovieList(categoryActive);
+    }
   }, []);
   return (
     <section>

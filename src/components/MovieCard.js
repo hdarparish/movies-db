@@ -1,7 +1,6 @@
 //router
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 //redux
-import { loadDetail } from "../actions/detailAction";
 import { useDispatch } from "react-redux";
 //animation
 import { motion } from "framer-motion";
@@ -11,8 +10,12 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function MovieCard({ movie }) {
   const dispatch = useDispatch();
-  const loadDetailHandler = () => {
-    dispatch(loadDetail(movie._id));
+  const location = useLocation().pathname;
+
+  const resetSearch = () => {
+    if (location.includes("/search")) {
+      dispatch({ type: "CLEAR_SEARCHED" });
+    }
   };
   return (
     <motion.div
@@ -35,7 +38,7 @@ function MovieCard({ movie }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="details__button"
-            onClick={loadDetailHandler}
+            onClick={resetSearch}
           >
             <Link to={`/movie/${movie._id}`}>
               <motion.button

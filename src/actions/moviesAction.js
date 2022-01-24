@@ -33,6 +33,7 @@ export const loadQuery =
         url: `${process.env.REACT_APP_API_URL}search`,
         params: { query: query, page: pageNumber },
       });
+
       dispatch({
         type: "FETCH_SEARCHED",
         payload: movieList.data,

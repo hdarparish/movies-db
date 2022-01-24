@@ -17,19 +17,15 @@ import starIcon from "../img/star.svg";
 function MovieDetail() {
   const navigate = useNavigate();
   const location = useLocation().pathname;
-  const history = window.location;
 
   const dispatch = useDispatch();
 
-  //const [movie, setMovie] = useState(null);
   const { movieDetail, isLoading } = useSelector((state) => state.detail);
 
   useEffect(() => {
-    if (Object.keys(movieDetail).length === 0) {
-      const movieURL = location.split("/");
-      const movieID = movieURL[movieURL.length - 1];
-      dispatch(loadDetail(movieID));
-    }
+    const movieURL = location.split("/");
+    const movieID = movieURL[movieURL.length - 1];
+    dispatch(loadDetail(movieID));
   }, []);
 
   return (

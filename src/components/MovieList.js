@@ -5,12 +5,9 @@ import { useLocation } from "react-router-dom";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { loadMovies, loadQuery } from "../actions/moviesAction";
-import { loadCategory } from "../actions/categoryAction";
 //animation
 import { motion, AnimatePresence } from "framer-motion";
 import { movieListAnimation } from "../Animation";
-//add UUID to generate unique keys otherwise react will not re-render components that might exist in multiple categories
-import { v4 as uuidv4 } from "uuid";
 //infinite scroll
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -30,42 +27,48 @@ function MovieList() {
     dispatch(loadMovies(category, count));
   };
 
+  //get the search query from URL parameter
   useEffect(() => {
-    if (searched) {
-      /*       console.log(searched);
-      setMovies([]);
-      setCount(0);
-      const newList = movieList.map((item) => ({
-        ...item,
-        uniqueID: uuidv4(),
-      })); */
-      setSearchedMovies((searchedMovies) => [...searchedMovies, ...searched]);
+    if (location.pathname.includes("/search") && count === 0) {
+      const searchQuery = new URLSearchParams(location.search).get("q");
+      dispatch(loadQuery(searchQuery, count));
+    }
+  }, []);
+
+  //update state with movies searched
+  useEffect(() => {
+    if (searched.length > 0) {
+      if (count === 0) {
+        setSearchedMovies(searched);
+      } else {
+        setSearchedMovies((searchedMovies) => [...searchedMovies, ...searched]);
+      }
     }
   }, [searched]);
 
+  //if the category changes call the function to update the list
   useEffect(() => {
-    console.log(searched);
     setMovies([]);
     setCount(0);
     if (!location.pathname.includes("/search")) {
       loadMoviesHandler();
     }
-  }, [category]);
+  }, [category, movieCount]);
 
+  //update the movie list
   useEffect(() => {
     /*     console.log(movieList); */
-    if (movieList) {
-      const newList = movieList.map((item) => ({
-        ...item,
-        uniqueID: uuidv4(),
-      }));
-
-      setMovies((movies) => [...movies, ...newList]);
+    if (movieList.length > 0) {
+      if (count === 0) {
+        setMovies(movieList);
+      } else {
+        setMovies((movies) => [...movies, ...movieList]);
+      }
     }
   }, [movieList]);
 
+  //load next movie list
   const loadNext = () => {
-    console.log(count);
     setCount(count + 20);
     if (location.pathname === "/") {
       loadMoviesHandler(count + 20);
