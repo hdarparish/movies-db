@@ -95,11 +95,11 @@ function MovieList() {
           className="movies"
         >
           <AnimatePresence>
-            {searchedMovies.length
-              ? searchedMovies?.map((movie, index) => (
+            {searchedMovies.length > 0
+              ? searchedMovies?.map((movie) => (
                   <MovieCard movie={movie} key={movie._id} />
                 ))
-              : movies?.map((movie, index) => (
+              : movies?.map((movie) => (
                   <MovieCard movie={movie} key={movie.uniqueID} />
                 ))}
           </AnimatePresence>
